@@ -1,0 +1,144 @@
+{
+  "start": {
+    "type": "MULTI_PARALLEL",
+    "children": [
+      {
+        "type": "SEQUENCE",
+        "children": [
+          {
+            "type": "ACTION",
+            "action": "SwimActionNode",
+            "params": {
+              "speed": 1145114.0
+            }
+          },
+          {
+            "type": "INVERTER",
+            "child": {
+              "type": "ACTION",
+              "action": "SwimActionNode",
+              "params": {
+                "speed": 20.6
+              }
+            }
+          },
+          {
+            "type": "SEQUENCE",
+            "children": [
+              {
+                "type": "ACTION",
+                "action": "SwimActionNode",
+                "params": {
+                  "speed": 1145114.0
+                }
+              },
+              {
+                "type": "INVERTER",
+                "child": {
+                  "type": "ACTION",
+                  "action": "SwimActionNode",
+                  "params": {
+                    "speed": 20.6
+                  }
+                }
+              },
+              {
+                "type": "SELECTOR",
+                "children": [
+                  {
+                    "type": "SEQUENCE",
+                    "children": [
+                      {
+                        "type": "ACTION",
+                        "action": "SwimActionNode",
+                        "params": {
+                          "speed": 1145114.0
+                        }
+                      },
+                      {
+                        "type": "INVERTER",
+                        "child": {
+                          "type": "ACTION",
+                          "action": "SwimActionNode",
+                          "params": {
+                            "speed": 20.6
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "INVERTER",
+        "child": {
+          "type": "ACTION",
+          "action": "SwimActionNode",
+          "params": {
+            "speed": 20.6
+          }
+        }
+      },
+      {
+        "type": "ACTION",
+        "action": "LookAroundActionNode",
+        "params": {
+          "radius": 12.6,
+          "enable_back_sight": true,
+          "communicate_list": ["Lucy", "Rose", "Nolan"]
+        }
+      },
+      {
+        "type": "ACTION",
+        "action": "WalkingActionNode",
+        "params": {
+          "speed": 12.6
+        }
+      },
+      {
+        "type": "ACTION",
+        "action": "EatActionNode",
+        "params": {
+          "can_eat_list": [
+            "water", "lava"
+          ]
+        }
+      },
+      {
+        "type": "REPEATER",
+        "child": {
+          "type": "ACTION",
+          "action": "WalkingActionNode",
+          "params": {
+            "speed": 12.6
+          }
+        },
+        "repeat_times": 50
+      },
+      {
+        "type": "CONDITION",
+        "condition": {
+
+        },
+        "true": {
+          "type": "ACTION",
+          "action": "CallingGuardActionNode",
+          "params": {
+            "minium_value": 1.0
+          }
+        },
+        "false": {
+          "type": "ACTION",
+          "action": "CallingGuardActionNode",
+          "params": {
+            "minium_value": 1.0
+          }
+        }
+      }
+    ]
+  }
+}

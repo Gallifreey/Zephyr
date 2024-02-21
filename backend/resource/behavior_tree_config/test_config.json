@@ -1,0 +1,36 @@
+{
+  "start": {
+    "type": "MULTI_PARALLEL",
+    "children": [
+      {
+        "type": "ACTION",
+        "action": "SwimmingActionNode",
+        "params": {
+          "in_water": false,
+          "in_lava": false
+        }
+      },
+      {
+        "type": "ACTION",
+        "action": "AttackMeleeActionNode",
+        "params": {
+          "speed": 12.3
+        }
+      },
+      {
+        "type": "ACTION",
+        "action": "TakeBlockActionNode",
+        "params": {
+          "block_list": ["Grass", "Sand", "Dirt", "Glass", "Wood", "TNT"]
+        }
+      },
+      {
+        "type": "ACTION",
+        "action": "PlaceBlockActionNode",
+        "params": {
+
+        }
+      }
+    ]
+  }
+}

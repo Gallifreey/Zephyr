@@ -1,0 +1,52 @@
+{
+  "start": {
+    "type": "MULTI_PARALLEL",
+    "children": [
+      {
+        "type": "SEQUENCE",
+        "children": [
+          {
+            "type": "ACTION",
+            "action": "EnemyClosingActionNode",
+            "params": {
+              "radius": 30.0,
+              "enemy_list": [
+                "R1", "R2", "R3", "R4", "R5", "R6", "R7"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "type": "ACTION",
+        "action": "EnemyClosingActionNode",
+        "params": {
+          "radius": 30.0,
+          "enemy_list": [
+            "R1", "R2", "R3", "R4", "R5", "R6"
+          ]
+        }
+      },
+      {
+        "type": "CONDITION",
+        "condition": {
+
+        },
+        "true": {
+          "type": "ACTION",
+          "action": "CallingGuardActionNode",
+          "params": {
+            "minium_value": 1.0
+          }
+        },
+        "false": {
+          "type": "ACTION",
+          "action": "CallingGuardActionNode",
+          "params": {
+            "minium_value": 1.0
+          }
+        }
+      }
+    ]
+  }
+}
