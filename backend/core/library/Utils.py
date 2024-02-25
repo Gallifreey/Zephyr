@@ -218,6 +218,19 @@ def normalize_dict(d: dict, ratio):
     return d
 
 
+def regen_list_from_keys(target: dict, keys: list):
+    """
+    从字典中抽取目标键值成数组
+    :param target: 目标字典
+    :param keys: 键值
+    :return: 数组
+    """
+    t = []
+    for k in keys:
+        t.append(target[k])
+    return t
+
+
 class DepthQueue(object):
     def __init__(self, maxsize=1):
         """
@@ -395,3 +408,47 @@ def append_crc16_check_sum(message, length):
     CRC = get_crc16_check_sum(message, length - 2, CRC16_INIT)
     message[length - 2] = (CRC & 0x00ff)
     message[length - 1] = ((CRC > 8) & 0x00ff)
+
+
+# 标定
+def find_board(img, board_w=9, board_h=6, board_eps=18.1, max_it=30, max_err=0.001):
+    """
+    找标定板函数
+    """
+    # 找棋盘格角点
+    # 设置寻找亚像素角点的参数，采用的停止准则是最大循环次数30和最大误差容限0.001
+    criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, max_it, max_err)  # 阈值
+    # 棋盘格模板规格
+    w = board_w
+    h = board_h
+    objp = np.zeros((w * h, 3), np.float32)
+    objp[:, :2] = np.mgrid[0:w, 0:h].T.reshape(-1, 2)
+    objp = objp * board_eps
+    # 储存棋盘格角点的世界坐标和图像坐标对
+    obj_points = []  # 在世界坐标系中的三维点
+    img_points = []  # 在图像平面的二维点
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    # 找到棋盘格角点
+    ret, corners = cv2.findChessboardCorners(gray, (w, h), None)
+    # 如果找到足够点对，将其存储起来
+    if ret:
+        # 在原角点的基础上寻找亚像素角点
+        cv2.cornerSubPix(gray, corners, (11, 11), (-1, -1), criteria)
+        # 追加进入世界三维点和平面二维点中
+        obj_points.append(objp)
+        img_points.append(corners)
+        # 将角点在图像上显示
+        cv2.drawChessboardCorners(img, (w, h), corners, ret)
+    return img, img_points
+
+
+def board2xyxy(img_points):
+    """
+    从标定板检测角点中提取标定板左上角和右下角坐标
+    :param img_points: 检测角点
+    :return: 标定板左上角和右下角坐标
+    """
+    if len(img_points) == 0:
+        return None, None
+    # 正常应该是第一个和最后一个点
+    return img_points[0][0], img_points[0][-1]
