@@ -29,7 +29,7 @@ class ReprojectPlugin(PluginBase):
     @classmethod
     def __reproject_thread(cls):
         cls.__reproject.parent = cls
-        cls.__reproject.t = EventBus.get('cam2world')
+        cls.__reproject.t = EventBus.get('cam2world')['data']
         while True:
             if EventBus.get('armor_car_index') and EventBus.get('depth_queue'):
                 cls.__reproject.get_depth(EventBus.get('armor_bbox')['data'], EventBus.get('depth_queue')['data'])

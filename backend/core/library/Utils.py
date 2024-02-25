@@ -184,7 +184,9 @@ def pnp(points, objects, k0, c0):
     :param c0: 相机畸变
     :return: 旋转向量、平移向量
     """
-    p, obp = get_values_from_two_dict(points, objects)
+    p, obp = points, objects
+    if isinstance(points[0], dict) and isinstance(objects[0], dict):
+        p, obp = get_values_from_two_dict(points, objects)
     obp = np.float64([[p] for p in obp])
     pick_point = np.float64(p).reshape(-1, 1, 2)
     _, rvec, tvec = cv2.solvePnP(obp, pick_point, np.float32(k0).reshape(3, 3), np.float32(c0), flags=cv2.SOLVEPNP_P3P)
@@ -312,7 +314,7 @@ class DepthQueue(object):
             cls, bbox = armor[0], xyxy2xywh(armor[1])
             c = xyxy2c(bbox)
             area = self.__depth[int(max(0, c[1] - bbox[3])):int(min(c[1] + bbox[3], self.__size[0] - 1)),
-                   int(max(c[0] - bbox[2], 0)):int(min(c[0] + bbox[2], self.__size[1] - 1))]
+                                int(max(c[0] - bbox[2], 0)):int(min(c[0] + bbox[2], self.__size[1] - 1))]
             z = np.nanmean(area) if not np.isnan(area).all() else np.nan
             res.append([cls, np.concatenate([cv2.undistortPoints(c, self.__k0, self.__c0).reshape(-1), np.array([z])],
                                             axis=0)])

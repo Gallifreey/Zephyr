@@ -37,7 +37,7 @@ class Reproject(Singleton):
         bev_points = {}  # 映射到小地图上的点
         ground_width = self.parent.get('game_ground_size')['data'][1]
         for cls, d in depth:
-            d = (self.t['data'] @ np.concatenate(
+            d = (self.t @ np.concatenate(
                 [np.concatenate([d[0:2], np.ones(1)], axis=0) * d[2], np.ones(1)], axis=0))[:3]
             # 坐标变换
             d[1] += ground_width
