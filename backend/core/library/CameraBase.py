@@ -29,6 +29,13 @@ class Camera(metaclass=abc.ABCMeta):
         """
         pass
 
+    @abc.abstractmethod
+    def load_config(self, file: str):
+        """
+        加载相机参数
+        :param file: 文件路径
+        """
+
     @staticmethod
     def encode_to_byte(frame):
         """

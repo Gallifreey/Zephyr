@@ -8,6 +8,7 @@ from core.library.EasyImportBase import ROOT
 
 
 class USBCamera(Camera):
+
     name = 'Static Video'
 
     def __init__(self):
@@ -48,3 +49,6 @@ class USBCamera(Camera):
             else:
                 break
             cv2.waitKey(100)
+
+    def load_config(self, file: str):
+        pass

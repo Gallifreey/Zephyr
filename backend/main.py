@@ -7,8 +7,6 @@ from core.hardware.Lidar.LidarPlugin import LidarPlugin
 from core.inference.AlertPlugin import AlertPlugin
 from radar_websocket.WebsocketPlugin import WebsocketPlugin
 
-# TODO 深度测量例程、相机标定例程
-
 if __name__ == "__main__":
     EventBus.read_config_file()
     BEVHandler.bus_handler = EventBus
